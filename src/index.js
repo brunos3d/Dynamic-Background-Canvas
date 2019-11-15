@@ -37,8 +37,8 @@ function Start() {
 function Update() {
     // transform.Translate(1px, 1px)
     for (let id = 0; id < max_points_count; id++) {
-        points[id].x -= 1;
-        points[id].y += 1;
+        points[id].x -= 100 / points[id].length;
+        points[id].y += 100 / points[id].length;
 
         if (points[id].x <= -(points[id].width + 100)) {
             points[id].x = c_width + 100;
