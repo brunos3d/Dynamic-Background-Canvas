@@ -26,7 +26,7 @@ function Start() {
             y: Math.random() * c_height,
             // random scale
             width: 10 + scale,
-            length: Math.random() * 150 + scale,
+            length: Math.random() <= 0.15 ? 0 : Math.random() * 150 + scale,
             // random color
             color: Math.random() >= 0.5 ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.1)"
         });
@@ -37,8 +37,14 @@ function Start() {
 function Update() {
     // transform.Translate(1px, 1px)
     for (let id = 0; id < max_points_count; id++) {
-        points[id].x -= 100 / points[id].length;
-        points[id].y += 100 / points[id].length;
+        if (points[id].length > 10) {
+            points[id].x -= 100 / points[id].length;
+            points[id].y += 100 / points[id].length;
+        }
+        else {
+            points[id].x -= 100 / points[id].width;
+            points[id].y += 100 / points[id].width;
+        }
 
         if (points[id].x <= -(points[id].width + 100)) {
             points[id].x = c_width + 100;
