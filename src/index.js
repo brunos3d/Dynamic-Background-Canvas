@@ -14,11 +14,13 @@ let enabled = false;
 
 let points = [];
 
+let points_count = 50;
 let bubbles_frequency = 0.15; // range(0, 1) 1 = 100% bubbles
-let max_points_count = 50;
 let max_point_speed = 5;
 let min_point_width = 20;
+let max_point_width = 100;
 let min_capsule_length = 20;
+let max_capsule_length = 150;
 
 
 // MonoBehaviour Awake() =]
@@ -36,16 +38,15 @@ function Start() {
     points = [];
 
     // Instantiate points
-    for (let id = 0; id < max_points_count; id++) {
-        const scale = Math.random() * 100;
+    for (let id = 0; id < points_count; id++) {
 
         points.push({
             // random position
             x: Math.random() * c_width,
             y: Math.random() * c_height,
             // random scale
-            width: Math.max(scale, min_point_width),
-            length: Math.random() <= bubbles_frequency ? 0 : Math.max(Math.random() * 150, min_capsule_length) + scale,
+            width: Math.max(Math.random() * max_point_width, min_point_width),
+            length: Math.random() <= bubbles_frequency ? 0 : Math.max(Math.random() * max_capsule_length, min_capsule_length),
             // random color
             color: Math.random() >= 0.5 ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.1)"
         });
@@ -55,7 +56,7 @@ function Start() {
 // loop every frame
 function Update() {
     // transform.Translate(1px, 1px)
-    for (let id = 0; id < max_points_count; id++) {
+    for (let id = 0; id < points_count; id++) {
         if (points[id].length > 10) {
             const speed = Math.min(100 / points[id].length, max_point_speed);
             points[id].x -= speed;
@@ -127,16 +128,20 @@ function SliderHandle() {
     // break loop
     enabled = false;
     bubbles_frequency = document.getElementById("bubbles_frequency").value / 100;
-    max_points_count = document.getElementById("max_points_count").value;
+    points_count = document.getElementById("points_count").value;
     max_point_speed = document.getElementById("max_point_speed").value;
     min_point_width = document.getElementById("min_point_width").value;
+    max_point_width = document.getElementById("max_point_width").value;
     min_capsule_length = document.getElementById("min_capsule_length").value;
+    max_capsule_length = document.getElementById("max_capsule_length").value;
 
+    document.getElementById("points_count-label").innerHTML = "points_count: " + points_count;
     document.getElementById("bubbles_frequency-label").innerHTML = "bubbles_frequency: " + bubbles_frequency;
-    document.getElementById("max_points_count-label").innerHTML = "max_points_count: " + max_points_count;
     document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + max_point_speed;
     document.getElementById("min_point_width-label").innerHTML = "min_point_width: " + min_point_width;
+    document.getElementById("max_point_width-label").innerHTML = "max_point_width: " + max_point_width;
     document.getElementById("min_capsule_length-label").innerHTML = "min_capsule_length: " + min_capsule_length;
+    document.getElementById("max_capsule_length-label").innerHTML = "max_capsule_length: " + max_capsule_length;
 
     // start again
     setTimeout(OnEnable, 10);

@@ -37,11 +37,11 @@
     <canvas id="canvas"></canvas>
 
     <div class="inputs">
+        <label id="points_count-label" for="points_count">points_count: 50</label>
+        <input class="slider" id="points_count" name="points_count" type="range" min="0" max="100" value="50">
+
         <label id="bubbles_frequency-label" for="bubbles_frequency">bubbles_frequency: 0.15</label>
         <input class="slider" id="bubbles_frequency" name="bubbles_frequency" type="range" min="0" max="100" value="15">
-
-        <label id="max_points_count-label" for="max_points_count">max_points_count: 50</label>
-        <input class="slider" id="max_points_count" name="max_points_count" type="range" min="0" max="100" value="50">
 
         <label id="max_point_speed-label" for="max_point_speed">max_point_speed: 5</label>
         <input class="slider" id="max_point_speed" name="max_point_speed" type="range" min="0" max="20" value="5">
@@ -49,8 +49,14 @@
         <label id="min_point_width-label" for="min_point_width">min_point_width: 20</label>
         <input class="slider" id="min_point_width" name="min_point_width" type="range" min="0" max="100" value="20">
 
+        <label id="max_point_width-label" for="max_point_width">max_point_width: 100</label>
+        <input class="slider" id="max_point_width" name="max_point_width" type="range" min="0" max="300" value="100">
+
         <label id="min_capsule_length-label" for="min_capsule_length">min_capsule_length: 20</label>
         <input class="slider" id="min_capsule_length" name="min_capsule_length" type="range" min="0" max="100" value="20">
+
+        <label id="max_capsule_length-label" for="max_capsule_length">max_capsule_length: 150</label>
+        <input class="slider" id="max_capsule_length" name="max_capsule_length" type="range" min="0" max="300" value="150">
     </div>
 
     <script src="./src/index.js"></script>
