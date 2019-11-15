@@ -53,7 +53,7 @@ function Start() {
             width: Math.max(Math.random() * max_point_width, min_point_width),
             length: (id + 1) / points_count <= bubbles_frequency ? 0 : Math.max(Math.random() * max_capsule_length, min_capsule_length),
             // random color
-            color: (id + 1) / points_count <= color_variation ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.1)"
+            color: (id + 1) / points_count <= color_variation ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.05)"
         });
     }
 }
@@ -74,11 +74,11 @@ function Update() {
         }
 
         if (points[id].x <= -(points[id].width + 100)) {
-            points[id].x = c_width + 100;
+            points[id].x = c_width + points[id].width;
         }
 
         if (points[id].y >= c_height + 100) {
-            points[id].y = -points[id].length - 10;
+            points[id].y = -points[id].length - points[id].width;
         }
     }
 
