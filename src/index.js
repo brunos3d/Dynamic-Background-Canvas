@@ -51,9 +51,9 @@ function Start() {
             y: Math.random() * c_height,
             // random scale
             width: Math.max(Math.random() * max_point_width, min_point_width),
-            length: id / points_count <= bubbles_frequency ? 0 : Math.max(Math.random() * max_capsule_length, min_capsule_length),
+            length: (id + 1) / points_count <= bubbles_frequency ? 0 : Math.max(Math.random() * max_capsule_length, min_capsule_length),
             // random color
-            color: id / points_count <= color_variation ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.1)"
+            color: (id + 1) / points_count <= color_variation ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.1)"
         });
     }
 }
