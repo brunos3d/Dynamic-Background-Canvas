@@ -10,16 +10,30 @@ canvas.height = 500;
 const c_width = canvas.width;
 const c_height = canvas.height;
 
-const points = [];
+let enabled = false;
 
-const bubbles_frequency = 0.15; // range(0, 1) 1 = 100% bubbles
-const max_points_count = 50;
-const min_point_width = 20;
-const min_capsule_length = 20;
-const max_point_speed = 5;
+let points = [];
+
+let bubbles_frequency = 0.15; // range(0, 1) 1 = 100% bubbles
+let max_points_count = 50;
+let max_point_speed = 5;
+let min_point_width = 20;
+let min_capsule_length = 20;
+
+
+// MonoBehaviour Awake() =]
+document.addEventListener("DOMContentLoaded", OnEnable);
+
+// initialization
+function OnEnable() {
+    enabled = true;
+    Start();
+    Update();
+}
 
 // initialization
 function Start() {
+    points = [];
 
     // Instantiate points
     for (let id = 0; id < max_points_count; id++) {
@@ -63,12 +77,15 @@ function Update() {
     }
 
     Repaint();
-    requestAnimationFrame(Update);
+
+    if (enabled) {
+        requestAnimationFrame(Update);
+    }
 }
 
 function Repaint() {
     // clear canvas
-    // context.clearRect(0, 0, c_width, c_height);
+    // ctx.clearRect(0, 0, c_width, c_height);
 
     // draw background
     ctx.fillStyle = '#1D2F34';
@@ -97,6 +114,33 @@ function drawCapsule(ctx, x, y, width, length, color) {
     ctx.restore();
 }
 
-// MonoBehaviour Awake() =]
-Start();
-Update();
+
+// ======================= remove this if you want =====================
+
+const sliders = document.getElementsByClassName("slider");
+
+for (let id = 0; id < sliders.length; id++) {
+    sliders[id].addEventListener("change", SliderHandle);
+}
+
+function SliderHandle() {
+    // break loop
+    enabled = false;
+    bubbles_frequency = document.getElementById("bubbles_frequency").value / 100;
+    max_points_count = document.getElementById("max_points_count").value;
+    max_point_speed = document.getElementById("max_point_speed").value;
+    min_point_width = document.getElementById("min_point_width").value;
+    min_capsule_length = document.getElementById("min_capsule_length").value;
+
+    document.getElementById("bubbles_frequency-label").innerHTML = "bubbles_frequency: " + bubbles_frequency;
+    document.getElementById("max_points_count-label").innerHTML = "max_points_count: " + max_points_count;
+    document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + max_point_speed;
+    document.getElementById("min_point_width-label").innerHTML = "min_point_width: " + min_point_width;
+    document.getElementById("min_capsule_length-label").innerHTML = "min_capsule_length: " + min_capsule_length;
+
+    // start again
+    setTimeout(OnEnable, 10);
+}
+
+// ==========================================================================
+

@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: Helvetica, sans-serif;
 }
 
 header {
@@ -27,4 +28,11 @@ header {
 
 .button {
     margin: 0 2px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
