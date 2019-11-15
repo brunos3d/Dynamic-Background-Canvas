@@ -11,7 +11,12 @@ const c_width = canvas.width;
 const c_height = canvas.height;
 
 const points = [];
+
+const bubbles_frequency = 0.15; // range(0, 1) 1 = 100% bubbles
 const max_points_count = 50;
+const min_point_width = 20;
+const min_capsule_length = 20;
+const max_point_speed = 5;
 
 // initialization
 function Start() {
@@ -25,8 +30,8 @@ function Start() {
             x: Math.random() * c_width,
             y: Math.random() * c_height,
             // random scale
-            width: 10 + scale,
-            length: Math.random() <= 0.15 ? 0 : Math.random() * 150 + scale,
+            width: Math.max(scale, min_point_width),
+            length: Math.random() <= bubbles_frequency ? 0 : Math.max(Math.random() * 150, min_capsule_length) + scale,
             // random color
             color: Math.random() >= 0.5 ? "rgba(40, 167, 69, 0.05)" : "rgba(255, 255, 255, 0.1)"
         });
@@ -38,12 +43,14 @@ function Update() {
     // transform.Translate(1px, 1px)
     for (let id = 0; id < max_points_count; id++) {
         if (points[id].length > 10) {
-            points[id].x -= 100 / points[id].length;
-            points[id].y += 100 / points[id].length;
+            const speed = Math.min(100 / points[id].length, max_point_speed);
+            points[id].x -= speed;
+            points[id].y += speed;
         }
         else {
-            points[id].x -= 100 / points[id].width;
-            points[id].y += 100 / points[id].width;
+            const speed = Math.min(100 / points[id].width, max_point_speed);
+            points[id].x -= speed;
+            points[id].y += speed;
         }
 
         if (points[id].x <= -(points[id].width + 100)) {
