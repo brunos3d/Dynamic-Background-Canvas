@@ -70,17 +70,19 @@ function Update() {
         points[id].x -= direction.x * speed;
         points[id].y += direction.y * speed;
 
-        if (points[id].x <= -(points[id].width + points[id].length + 10)) {
-            points[id].x = c_width + points[id].width + points[id].length;
+        const point_size = points[id].width + points[id].length;
+
+        if (points[id].x <= -(point_size + 10)) {
+            points[id].x = c_width + point_size;
         }
-        if (points[id].x >= c_width + points[id].width + points[id].length + 10) {
+        if (points[id].x >= c_width + point_size + 10) {
             points[id].x = -(points[id].length + points[id].width);
         }
 
-        if (points[id].y <= -(points[id].width + points[id].length + 10)) {
-            points[id].y = c_height + points[id].width + points[id].length;
+        if (points[id].y <= -(point_size + 10)) {
+            points[id].y = c_height + point_size;
         }
-        if (points[id].y >= c_height + points[id].width + points[id].length + 10) {
+        if (points[id].y >= c_height + point_size + 10) {
             points[id].y = -(points[id].length + points[id].width);
         }
     }
