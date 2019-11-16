@@ -22,6 +22,7 @@ let color_variation = 0.5; // range(0, 1) 0 = white / 1 = green
 
 let parallax_factor = 1;
 let speed_factor = 0.25;
+let min_point_speed = 1;
 let max_point_speed = 5;
 
 let min_point_width = 40;
@@ -67,7 +68,7 @@ function Update() {
     for (let id = 0; id < points_count; id++) {
         const point_size = points[id].width + points[id].length;
 
-        const speed = Math.min((150 + (150 * parallax_factor)) / point_size + (150 * (1 - parallax_factor)), max_point_speed) * speed_factor;
+        const speed = Math.min(Math.max(150 / point_size * parallax_factor, min_point_speed), max_point_speed) * speed_factor;
 
         const direction = rotateVector({ x: 1, y: 0 }, points_angle);
 
@@ -157,13 +158,15 @@ for (let id = 0; id < sliders_r.length; id++) {
 
 function SliderInputHandle() {
     points_angle = document.getElementById("points_angle").value;
-    speed_factor = document.getElementById("speed_factor").value / 100;
     parallax_factor = document.getElementById("parallax_factor").value / 100;
+    speed_factor = document.getElementById("speed_factor").value / 100;
+    min_point_speed = document.getElementById("min_point_speed").value;
     max_point_speed = document.getElementById("max_point_speed").value;
 
     document.getElementById("points_angle-label").innerHTML = "points_angle: " + points_angle;
-    document.getElementById("speed_factor-label").innerHTML = "speed_factor: " + speed_factor;
     document.getElementById("parallax_factor-label").innerHTML = "parallax_factor: " + parallax_factor;
+    document.getElementById("speed_factor-label").innerHTML = "speed_factor: " + speed_factor;
+    document.getElementById("min_point_speed-label").innerHTML = "min_point_speed: " + min_point_speed;
     document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + max_point_speed;
 }
 
