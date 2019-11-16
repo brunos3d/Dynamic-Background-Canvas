@@ -15,6 +15,7 @@ let enabled = false;
 let points = [];
 
 let points_count = 50;
+let points_angle = 135;
 let bubbles_frequency = 0.15; // range(0, 1) 1 = 100% bubbles
 let color_variation = 0.5; // range(0, 1) 0 = white / 1 = green
 
@@ -64,21 +65,33 @@ function Update() {
     for (let id = 0; id < points_count; id++) {
         if (points[id].length > 10) {
             const speed = Math.min(100 / points[id].length, max_point_speed) * speed_factor;
-            points[id].x -= speed;
-            points[id].y += speed;
+
+            const direction = rotateVector({ x: 1, y: 0 }, points_angle);
+
+            points[id].x -= direction.x * speed;
+            points[id].y += direction.y * speed;
         }
         else {
             const speed = Math.min(100 / points[id].width, max_point_speed) * speed_factor;
-            points[id].x -= speed;
-            points[id].y += speed;
+
+            const direction = rotateVector({ x: 1, y: 0 }, points_angle);
+
+            points[id].x -= direction.x * speed;
+            points[id].y += direction.y * speed;
         }
 
-        if (points[id].x <= -(points[id].width + 100)) {
-            points[id].x = c_width + points[id].width;
+        if (points[id].x <= -(points[id].width + points[id].length + 10)) {
+            points[id].x = c_width + points[id].width + points[id].length;
+        }
+        if (points[id].x >= c_width + points[id].width + points[id].length + 10) {
+            points[id].x = -(points[id].length + points[id].width);
         }
 
-        if (points[id].y >= c_height + 100) {
-            points[id].y = -points[id].length - points[id].width;
+        if (points[id].y <= -(points[id].width + points[id].length + 10)) {
+            points[id].y = c_height + points[id].width + points[id].length;
+        }
+        if (points[id].y >= c_height + points[id].width + points[id].length + 10) {
+            points[id].y = -(points[id].length + points[id].width);
         }
     }
 
@@ -103,6 +116,20 @@ function Repaint() {
     });
 }
 
+function rotateVector(vector, angle) {
+    angle = -angle * (Math.PI / 180);
+
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+
+    const result = {
+        x: Math.round(10000 * (-vector.x * cos - vector.y * sin)) / 10000,
+        y: Math.round(10000 * (-vector.x * sin + vector.y * cos)) / 10000
+    };
+
+    return result;
+}
+
 function drawCapsule(ctx, x, y, width, length, color) {
     ctx.fillStyle = color;
 
@@ -110,7 +137,7 @@ function drawCapsule(ctx, x, y, width, length, color) {
 
     ctx.save();
     ctx.translate(x, y);
-    ctx.rotate(135 * Math.PI / 180);
+    ctx.rotate(points_angle * Math.PI / 180);
 
     ctx.arc(0, 0, width / 2, Math.PI * 0.5, Math.PI * 1.5);
     ctx.arc(length, 0, width / 2, Math.PI * 1.5, Math.PI * 0.5);
@@ -123,35 +150,49 @@ function drawCapsule(ctx, x, y, width, length, color) {
 
 // ======================= remove this if you want =====================
 
-const sliders = document.getElementsByClassName("slider");
+const sliders_i = document.getElementsByClassName("slider-immediately");
+const sliders_r = document.getElementsByClassName("slider-restart");
 
-for (let id = 0; id < sliders.length; id++) {
-    sliders[id].addEventListener("change", SliderHandle);
+for (let id = 0; id < sliders_i.length; id++) {
+    sliders_i[id].addEventListener("input", SliderInputHandle);
 }
 
-function SliderHandle() {
+for (let id = 0; id < sliders_r.length; id++) {
+    sliders_r[id].addEventListener("change", SliderChangeHandle);
+}
+
+function SliderInputHandle() {
+    points_angle = document.getElementById("points_angle").value;
+    speed_factor = document.getElementById("speed_factor").value / 100;
+    max_point_speed = document.getElementById("max_point_speed").value;
+
+    document.getElementById("points_count-label").innerHTML = "points_count: " + document.getElementById("points_count").value;
+    document.getElementById("points_angle-label").innerHTML = "points_angle: " + document.getElementById("points_angle").value;
+    document.getElementById("bubbles_frequency-label").innerHTML = "bubbles_frequency: " + document.getElementById("bubbles_frequency").value / 100;
+    document.getElementById("color_variation-label").innerHTML = "color_variation: " + document.getElementById("color_variation").value / 100;
+    document.getElementById("speed_factor-label").innerHTML = "speed_factor: " + document.getElementById("speed_factor").value / 100;
+    document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + document.getElementById("max_point_speed").value;
+    document.getElementById("min_point_width-label").innerHTML = "min_point_width: " + document.getElementById("min_point_width").value;
+    document.getElementById("max_point_width-label").innerHTML = "max_point_width: " + document.getElementById("max_point_width").value;
+    document.getElementById("min_capsule_length-label").innerHTML = "min_capsule_length: " + document.getElementById("min_capsule_length").value;
+    document.getElementById("max_capsule_length-label").innerHTML = "max_capsule_length: " + document.getElementById("max_capsule_length").value;
+}
+
+function SliderChangeHandle() {
     // break loop
     enabled = false;
 
-    bubbles_frequency = document.getElementById("bubbles_frequency").value / 100;
-    color_variation = document.getElementById("color_variation").value / 100;
-    points_count = document.getElementById("points_count").value;
+    points_angle = document.getElementById("points_angle").value;
     speed_factor = document.getElementById("speed_factor").value / 100;
     max_point_speed = document.getElementById("max_point_speed").value;
+
+    points_count = document.getElementById("points_count").value;
+    bubbles_frequency = document.getElementById("bubbles_frequency").value / 100;
+    color_variation = document.getElementById("color_variation").value / 100;
     min_point_width = document.getElementById("min_point_width").value;
     max_point_width = document.getElementById("max_point_width").value;
     min_capsule_length = document.getElementById("min_capsule_length").value;
     max_capsule_length = document.getElementById("max_capsule_length").value;
-
-    document.getElementById("points_count-label").innerHTML = "points_count: " + points_count;
-    document.getElementById("bubbles_frequency-label").innerHTML = "bubbles_frequency: " + bubbles_frequency;
-    document.getElementById("color_variation-label").innerHTML = "color_variation: " + color_variation;
-    document.getElementById("speed_factor-label").innerHTML = "speed_factor: " + speed_factor;
-    document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + max_point_speed;
-    document.getElementById("min_point_width-label").innerHTML = "min_point_width: " + min_point_width;
-    document.getElementById("max_point_width-label").innerHTML = "max_point_width: " + max_point_width;
-    document.getElementById("min_capsule_length-label").innerHTML = "min_capsule_length: " + min_capsule_length;
-    document.getElementById("max_capsule_length-label").innerHTML = "max_capsule_length: " + max_capsule_length;
 
     // start again
     setTimeout(OnEnable, 10);

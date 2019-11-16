@@ -12,6 +12,7 @@
 
 <body>
 
+    <!--  ======= remove this if you want ======= -->
     <header>
         <div class="buttons">
             <div class="button">
@@ -33,40 +34,59 @@
             </div>
         </div>
     </header>
+    <!-- ============================= -->
 
+    <!--  ======= IMPORTANT ======= -->
     <canvas id="canvas"></canvas>
+    <!-- ============================= -->
 
-    <div class="inputs">
-        <label id="points_count-label" for="points_count">points_count: 50</label>
-        <input class="slider" id="points_count" name="points_count" type="range" min="0" max="100" value="50">
+    <!--  ======= remove this if you want ======= -->
+    <div class="row">
+        <div class="column">
+            <h4>Changes will apply immediately</h4>
 
-        <label id="bubbles_frequency-label" for="bubbles_frequency">bubbles_frequency: 0.15</label>
-        <input class="slider" id="bubbles_frequency" name="bubbles_frequency" type="range" min="0" max="100" value="15">
+            <label id="points_angle-label" for="points_angle">points_angle: 135</label>
+            <input class="slider-immediately" id="points_angle" name="points_angle" type="range" min="0" max="360" value="135">
 
-        <label id="color_variation-label" for="color_variation">color_variation: 0.5</label>
-        <input class="slider" id="color_variation" name="color_variation" type="range" min="0" max="100" value="50">
+            <label id="speed_factor-label" for="speed_factor">speed_factor: 0.25</label>
+            <input class="slider-immediately" id="speed_factor" name="speed_factor" type="range" min="0" max="1000" value="25">
 
-        <label id="speed_factor-label" for="speed_factor">speed_factor: 0.25</label>
-        <input class="slider" id="speed_factor" name="speed_factor" type="range" min="0" max="300" value="25">
+            <label id="max_point_speed-label" for="max_point_speed">max_point_speed: 5</label>
+            <input class="slider-immediately" id="max_point_speed" name="max_point_speed" type="range" min="0" max="15" value="5">
+        </div>
 
-        <label id="max_point_speed-label" for="max_point_speed">max_point_speed: 5</label>
-        <input class="slider" id="max_point_speed" name="max_point_speed" type="range" min="0" max="20" value="5">
+        <div class="column">
+            <h4>Changes will result in creating new instances</h4>
 
-        <label id="min_point_width-label" for="min_point_width">min_point_width: 40</label>
-        <input class="slider" id="min_point_width" name="min_point_width" type="range" min="0" max="100" value="40">
+            <label id="points_count-label" for="points_count">points_count: 50</label>
+            <input class="slider-restart" id="points_count" name="points_count" type="range" min="0" max="100" value="50">
 
-        <label id="max_point_width-label" for="max_point_width">max_point_width: 100</label>
-        <input class="slider" id="max_point_width" name="max_point_width" type="range" min="0" max="300" value="100">
+            <label id="bubbles_frequency-label" for="bubbles_frequency">bubbles_frequency: 0.15</label>
+            <input class="slider-restart" id="bubbles_frequency" name="bubbles_frequency" type="range" min="0" max="100" value="15">
 
-        <label id="min_capsule_length-label" for="min_capsule_length">min_capsule_length: 20</label>
-        <input class="slider" id="min_capsule_length" name="min_capsule_length" type="range" min="0" max="100" value="20">
+            <label id="color_variation-label" for="color_variation">color_variation: 0.5</label>
+            <input class="slider-restart" id="color_variation" name="color_variation" type="range" min="0" max="100" value="50">
 
-        <label id="max_capsule_length-label" for="max_capsule_length">max_capsule_length: 150</label>
-        <input class="slider" id="max_capsule_length" name="max_capsule_length" type="range" min="0" max="300" value="150">
+            <label id="min_point_width-label" for="min_point_width">min_point_width: 40</label>
+            <input class="slider-restart" id="min_point_width" name="min_point_width" type="range" min="0" max="100" value="40">
+
+            <label id="max_point_width-label" for="max_point_width">max_point_width: 100</label>
+            <input class="slider-restart" id="max_point_width" name="max_point_width" type="range" min="0" max="300" value="100">
+
+            <label id="min_capsule_length-label" for="min_capsule_length">min_capsule_length: 20</label>
+            <input class="slider-restart" id="min_capsule_length" name="min_capsule_length" type="range" min="0" max="100" value="20">
+
+            <label id="max_capsule_length-label" for="max_capsule_length">max_capsule_length: 150</label>
+            <input class="slider-restart" id="max_capsule_length" name="max_capsule_length" type="range" min="0" max="300" value="150">
+        </div>
     </div>
+    <!-- ============================= -->
 
     <script src="./src/index.js"></script>
+
+    <!--  ======= remove this if you want ======= -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- ============================= -->
 
 </body>
 
