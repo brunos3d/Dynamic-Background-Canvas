@@ -63,27 +63,27 @@ function Start() {
 function Update() {
     // transform.Translate(1px, 1px)
     for (let id = 0; id < points_count; id++) {
-        const speed = Math.min(150 / (points[id].length + points[id].width), max_point_speed) * speed_factor;
+        const point_size = points[id].width + points[id].length;
+
+        const speed = Math.min(150 / point_size, max_point_speed) * speed_factor;
 
         const direction = rotateVector({ x: 1, y: 0 }, points_angle);
 
         points[id].x -= direction.x * speed;
         points[id].y += direction.y * speed;
 
-        const point_size = points[id].width + points[id].length;
-
         if (points[id].x <= -(point_size + 10)) {
             points[id].x = c_width + point_size;
         }
         if (points[id].x >= c_width + point_size + 10) {
-            points[id].x = -(points[id].length + points[id].width);
+            points[id].x = -point_size;
         }
 
         if (points[id].y <= -(point_size + 10)) {
             points[id].y = c_height + point_size;
         }
         if (points[id].y >= c_height + point_size + 10) {
-            points[id].y = -(points[id].length + points[id].width);
+            points[id].y = -point_size;
         }
     }
 
