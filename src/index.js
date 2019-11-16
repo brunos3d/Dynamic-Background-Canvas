@@ -166,25 +166,14 @@ function SliderInputHandle() {
     speed_factor = document.getElementById("speed_factor").value / 100;
     max_point_speed = document.getElementById("max_point_speed").value;
 
-    document.getElementById("points_count-label").innerHTML = "points_count: " + document.getElementById("points_count").value;
-    document.getElementById("points_angle-label").innerHTML = "points_angle: " + document.getElementById("points_angle").value;
-    document.getElementById("bubbles_frequency-label").innerHTML = "bubbles_frequency: " + document.getElementById("bubbles_frequency").value / 100;
-    document.getElementById("color_variation-label").innerHTML = "color_variation: " + document.getElementById("color_variation").value / 100;
-    document.getElementById("speed_factor-label").innerHTML = "speed_factor: " + document.getElementById("speed_factor").value / 100;
-    document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + document.getElementById("max_point_speed").value;
-    document.getElementById("min_point_width-label").innerHTML = "min_point_width: " + document.getElementById("min_point_width").value;
-    document.getElementById("max_point_width-label").innerHTML = "max_point_width: " + document.getElementById("max_point_width").value;
-    document.getElementById("min_capsule_length-label").innerHTML = "min_capsule_length: " + document.getElementById("min_capsule_length").value;
-    document.getElementById("max_capsule_length-label").innerHTML = "max_capsule_length: " + document.getElementById("max_capsule_length").value;
+    document.getElementById("points_angle-label").innerHTML = "points_angle: " + points_angle;
+    document.getElementById("speed_factor-label").innerHTML = "speed_factor: " + speed_factor;
+    document.getElementById("max_point_speed-label").innerHTML = "max_point_speed: " + max_point_speed;
 }
 
 function SliderChangeHandle() {
     // break loop
     enabled = false;
-
-    points_angle = document.getElementById("points_angle").value;
-    speed_factor = document.getElementById("speed_factor").value / 100;
-    max_point_speed = document.getElementById("max_point_speed").value;
 
     points_count = document.getElementById("points_count").value;
     bubbles_frequency = document.getElementById("bubbles_frequency").value / 100;
@@ -193,6 +182,15 @@ function SliderChangeHandle() {
     max_point_width = document.getElementById("max_point_width").value;
     min_capsule_length = document.getElementById("min_capsule_length").value;
     max_capsule_length = document.getElementById("max_capsule_length").value;
+
+    document.getElementById("points_count-label").innerHTML = "points_count: " + points_count;
+    document.getElementById("bubbles_frequency-label").innerHTML = "bubbles_frequency: " + bubbles_frequency;
+    document.getElementById("color_variation-label").innerHTML = "color_variation: " + color_variation;
+    document.getElementById("min_point_width-label").innerHTML = "min_point_width: " + min_point_width;
+    document.getElementById("max_point_width-label").innerHTML = "max_point_width: " + max_point_width;
+    document.getElementById("min_capsule_length-label").innerHTML = "min_capsule_length: " + min_capsule_length;
+    document.getElementById("max_capsule_length-label").innerHTML = "max_capsule_length: " + max_capsule_length;
+
 
     // start again
     setTimeout(OnEnable, 10);
